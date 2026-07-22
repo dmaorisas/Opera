@@ -1,0 +1,384 @@
+@import "tailwindcss";
+
+@theme {
+  --color-obsidian: #030305;
+  --color-void: #000000;
+  --color-surface: #0e121b;
+  --color-primary: #8b5cf6;
+  --color-accent: #06b6d4;
+  --color-plasma: #d946ef;
+  --color-neon-orange: #FF6B00;
+
+  --font-display: "Syne", "sans-serif";
+  --font-body: "Manrope", "sans-serif";
+
+  --animate-pulse-slow: pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-float-delayed: float 7s ease-in-out 1s infinite;
+  --animate-float-slow: float 8s ease-in-out 2s infinite;
+  --animate-drift-1: drift 20s linear infinite;
+  --animate-drift-2: drift 25s linear infinite reverse;
+  --animate-drift-3: drift 30s linear infinite;
+  --animate-scroll: scroll 40s linear infinite;
+  --animate-shimmer: shimmer 2s linear infinite;
+  --animate-shimmer-slow: shimmer 4s linear infinite;
+  --animate-glow: glow 2s ease-in-out infinite alternate;
+  --animate-reveal-up: revealUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  --animate-slide-in-right: slideInRight 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  --animate-beam: beam 3s linear infinite;
+  --animate-carousel: carousel 7.5s infinite;
+  --animate-card-pop-sequence: cardPopSequence 15s linear infinite;
+  --animate-beam-progress: beamProgress 15s linear infinite;
+  --animate-offer-slide: offerSlide 12s infinite;
+  --animate-hero-glow: heroGlow 15s infinite alternate;
+  --animate-ping-slow: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  --animate-blob-spin: blobSpin 25s infinite linear;
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-15px);
+    }
+  }
+
+  @keyframes drift {
+    0% {
+      transform: translate(0, 0);
+    }
+
+    25% {
+      transform: translate(10px, -15px);
+    }
+
+    50% {
+      transform: translate(-5px, -25px);
+    }
+
+    75% {
+      transform: translate(-15px, -10px);
+    }
+
+    100% {
+      transform: translate(0, 0);
+    }
+  }
+
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes shimmer {
+    from {
+      background-position: 0 0;
+    }
+
+    to {
+      background-position: -200% 0;
+    }
+  }
+
+  @keyframes glow {
+    from {
+      box-shadow: 0 0 10px -5px #8b5cf6;
+    }
+
+    to {
+      box-shadow: 0 0 25px 5px #8b5cf6;
+    }
+  }
+
+  @keyframes revealUp {
+    0% {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideInRight {
+    0% {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes beam {
+    0% {
+      left: -100%;
+      opacity: 0;
+    }
+
+    50% {
+      opacity: 1;
+    }
+
+    100% {
+      left: 100%;
+      opacity: 0;
+    }
+  }
+
+  @keyframes carousel {
+
+    0%,
+    25% {
+      opacity: 1;
+      transform: scale(1);
+      filter: blur(0px);
+      color: #ffffff;
+      text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+    }
+
+    33%,
+    95% {
+      opacity: 0.2;
+      transform: scale(0.9) translateX(-20px);
+      filter: blur(2px);
+      color: #4b5563;
+      text-shadow: none;
+    }
+
+    100% {
+      opacity: 1;
+      transform: scale(1);
+      filter: blur(0px);
+      color: #ffffff;
+      text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+    }
+  }
+
+  @keyframes heroGlow {
+    0% {
+      opacity: 0.4;
+      transform: scale(1);
+    }
+
+    50% {
+      opacity: 0.6;
+      transform: scale(1.2);
+    }
+
+    100% {
+      opacity: 0.4;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes cardPopSequence {
+
+    0%,
+    18% {
+      transform: scale(1.05) translateY(-10px);
+      border-color: #8b5cf6;
+      box-shadow: 0 20px 40px -10px rgba(139, 92, 246, 0.3);
+      z-index: 10;
+      background-color: rgba(139, 92, 246, 0.05);
+    }
+
+    20%,
+    100% {
+      transform: scale(1) translateY(0);
+      border-color: rgba(255, 255, 255, 0.1);
+      box-shadow: none;
+      z-index: 0;
+      background-color: rgba(255, 255, 255, 0.03);
+    }
+  }
+
+  @keyframes beamProgress {
+    0% {
+      left: -10%;
+      opacity: 0;
+      width: 20%;
+    }
+
+    5% {
+      opacity: 1;
+    }
+
+    90% {
+      opacity: 1;
+    }
+
+    100% {
+      left: 110%;
+      opacity: 0;
+      width: 20%;
+    }
+  }
+
+  @keyframes offerSlide {
+
+    0%,
+    22% {
+      transform: scale(1.02);
+      border-color: #8b5cf6;
+      background-color: rgba(255, 255, 255, 0.03);
+    }
+
+    25%,
+    100% {
+      transform: scale(1);
+      border-color: rgba(255, 255, 255, 0.1);
+      background-color: rgba(255, 255, 255, 0.03);
+    }
+  }
+
+  @keyframes blobSpin {
+    0% {
+      transform: rotate(0deg) scale(1);
+    }
+
+    33% {
+      transform: rotate(120deg) scale(1.1);
+    }
+
+    66% {
+      transform: rotate(240deg) scale(0.9);
+    }
+
+    100% {
+      transform: rotate(360deg) scale(1);
+    }
+  }
+}
+
+@layer base {
+  body {
+    @apply font-body bg-obsidian text-[#e2e8f0] overflow-x-hidden min-h-screen relative;
+    background-image: radial-gradient(circle at 50% 0%, #1a1a2e 0%, #030305 100%);
+  }
+}
+
+@layer components {
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  }
+
+  .unified-glass {
+    background: rgba(14, 18, 27, 0.4);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .neon-aura {
+    position: relative;
+    z-index: 1;
+  }
+
+  .neon-aura::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    z-index: -1;
+    filter: blur(8px);
+    opacity: 0;
+    transition: opacity 0.3s;
+    border-radius: inherit;
+    background: linear-gradient(45deg, #FF6B00, #d946ef, #FF6B00);
+    background-size: 400%;
+    animation: shimmer 20s linear infinite;
+  }
+
+  .neon-aura:hover::before {
+    opacity: 1;
+  }
+}
+
+.liquid-background {
+  @apply fixed inset-0 z-[-2] overflow-hidden pointer-events-none bg-obsidian;
+}
+
+.liquid-blob {
+  @apply absolute rounded-full blur-[80px] opacity-[0.4] mix-blend-screen;
+  animation: blob-spin 25s infinite linear;
+}
+
+.particles-container {
+  @apply fixed inset-0 z-[-1] pointer-events-none overflow-hidden;
+  will-change: transform;
+  transform-origin: center center;
+}
+
+.data-particle {
+  @apply absolute rounded-full bg-white/40;
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.2);
+}
+
+.data-particle.hex {
+  @apply rounded-none w-2 h-2 bg-primary/30;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+.data-particle.cross {
+  @apply bg-transparent w-[10px] h-[10px] flex items-center justify-center;
+  box-shadow: none;
+}
+
+.data-particle.cross::before,
+.data-particle.cross::after {
+  content: '';
+  @apply absolute bg-accent/30;
+}
+
+.data-particle.cross::before {
+  @apply w-full h-[1px];
+}
+
+.data-particle.cross::after {
+  @apply h-full w-[1px];
+}
+
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.timeline-beam-active {
+  @apply absolute top-1/2 h-[6px] w-1/4 z-[1] blur-[6px];
+  box-shadow: 0 0 30px 5px #8b5cf6;
+  background: linear-gradient(90deg, transparent, #8b5cf6, #fff, #8b5cf6, transparent);
+  transform: translateY(-50%);
+}
+
+.organic-blur-divider {
+  @apply absolute left-0 w-full h-[150px] blur-[40px] pointer-events-none z-0;
+  background: radial-gradient(ellipse at center, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+}
+
+.floating-particle {
+  @apply absolute w-1 h-1 bg-white rounded-full opacity-30;
+  animation: float 10s infinite ease-in-out;
+}

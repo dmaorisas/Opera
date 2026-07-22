@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html class="dark scroll-smooth scroll-pt-24" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Operación eficiente - Consultoría de eficiencia e IA</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&amp;family=Manrope:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        obsidian: "#030305", 
+                        void: "#000000",
+                        surface: "#0e121b",
+                        primary: "#8b5cf6", 
+                        accent: "#06b6d4", 
+                        plasma: "#d946ef", 
+                        'neon-orange': "#FF6B00", 
+                    },
+                    fontFamily: {
+                        display: ["Syne", "sans-serif"],
+                        body: ["Manrope", "sans-serif"]
+                    },
+                    fontSize: {
+                        'fluid-hero': 'clamp(2.5rem, 8vw, 6rem)',
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-delayed': 'float 7s ease-in-out 1s infinite',
+                        'float-slow': 'float 8s ease-in-out 2s infinite',
+                        'drift-1': 'drift 20s linear infinite',
+                        'drift-2': 'drift 25s linear infinite reverse',
+                        'drift-3': 'drift 30s linear infinite',
+                        'scroll': 'scroll 40s linear infinite',
+                        'shimmer': 'shimmer 2s linear infinite',
+                        'shimmer-slow': 'shimmer 4s linear infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'reveal-up': 'revealUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards',
+                        'slide-in-right': 'slideInRight 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards',
+                        'beam': 'beam 3s linear infinite',
+                        'carousel': 'carousel 7.5s infinite',
+                        'card-pop-sequence': 'cardPopSequence 15s linear infinite',
+                        'beam-progress': 'beamProgress 15s linear infinite',
+                        'offer-slide': 'offerSlide 12s infinite',
+                        'hero-glow': 'heroGlow 15s infinite alternate',
+                        'ping-slow': 'ping 2s cubic-bezier(0, 0, 0.2, 1) infinite',
+                        'blob-spin': 'blobSpin 25s infinite linear',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        },
+                        drift: {
+                            '0%': { transform: 'translate(0, 0)' },
+                            '25%': { transform: 'translate(10px, -15px)' },
+                            '50%': { transform: 'translate(-5px, -25px)' },
+                            '75%': { transform: 'translate(-15px, -10px)' },
+                            '100%': { transform: 'translate(0, 0)' },
+                        },
+                        scroll: {
+                            '0%': { transform: 'translateX(0)' },
+                            '100%': { transform: 'translateX(-50%)' },
+                        },
+                        shimmer: {
+                            'from': { backgroundPosition: '0 0' },
+                            'to': { backgroundPosition: '-200% 0' }
+                        },
+                        glow: {
+                            'from': { boxShadow: '0 0 10px -5px #8b5cf6' },
+                            'to': { boxShadow: '0 0 25px 5px #8b5cf6' }
+                        },
+                        revealUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        slideInRight: {
+                            '0%': { opacity: '0', transform: 'translateX(-20px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' }
+                        },
+                        beam: {
+                            '0%': { left: '-100%', opacity: '0' },
+                            '50%': { opacity: '1' },
+                            '100%': { left: '100%', opacity: '0' }
+                        },
+                        carousel: {
+                            '0%, 25%': { opacity: '1', transform: 'scale(1)', filter: 'blur(0px)', color: '#ffffff', textShadow: '0 0 30px rgba(255,255,255,0.3)' },
+                            '33%, 95%': { opacity: '0.2', transform: 'scale(0.9) translateX(-20px)', filter: 'blur(2px)', color: '#4b5563', textShadow: 'none' },
+                            '100%': { opacity: '1', transform: 'scale(1)', filter: 'blur(0px)', color: '#ffffff', textShadow: '0 0 30px rgba(255,255,255,0.3)' },
+                        },
+                        heroGlow: {
+                            '0%': { opacity: '0.4', transform: 'scale(1)' },
+                            '50%': { opacity: '0.6', transform: 'scale(1.2)' },
+                            '100%': { opacity: '0.4', transform: 'scale(1)' },
+                        },
+                        cardPopSequence: {
+                            '0%, 18%': { transform: 'scale(1.05) translateY(-10px)', borderColor: '#8b5cf6', boxShadow: '0 20px 40px -10px rgba(139,92,246,0.3)', zIndex: '10', backgroundColor: 'rgba(139, 92, 246, 0.05)' },
+                            '20%, 100%': { transform: 'scale(1) translateY(0)', borderColor: 'rgba(255,255,255,0.1)', boxShadow: 'none', zIndex: '0', backgroundColor: 'rgba(255, 255, 255, 0.03)' }
+                        },
+                        beamProgress: {
+                            '0%': { left: '-10%', opacity: '0', width: '20%' },
+                            '5%': { opacity: '1' },
+                            '90%': { opacity: '1' },
+                            '100%': { left: '110%', opacity: '0', width: '20%' }
+                        },
+                        offerSlide: {
+                            '0%, 22%': { transform: 'scale(1.02)', borderColor: '#8b5cf6', backgroundColor: 'rgba(255,255,255,0.03)' },
+                            '25%, 100%': { transform: 'scale(1)', borderColor: 'rgba(255,255,255,0.1)', backgroundColor: 'rgba(255,255,255,0.03)' }
+                        },
+                        blobSpin: {
+                            '0%': { transform: 'rotate(0deg) scale(1)' },
+                            '33%': { transform: 'rotate(120deg) scale(1.1)' },
+                            '66%': { transform: 'rotate(240deg) scale(0.9)' },
+                            '100%': { transform: 'rotate(360deg) scale(1)' },
+                        }
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #030305;
+            color: #e2e8f0;
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at 50% 0%, #1a1a2e 0%, #030305 100%);
+            min-height: 100vh;
+        }
+        .liquid-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+            pointer-events: none;
+            background: #030305;
+        }
+        .liquid-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: blob-spin 25s infinite linear;
+        }.particles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+            will-change: transform;transform-origin: center center;
+        }
+        .data-particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 0 4px rgba(255, 255, 255, 0.2);
+        }
+        .data-particle.hex {
+            border-radius: 0;
+            width: 8px;
+            height: 8px;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            background: rgba(139, 92, 246, 0.3);
+        }
+        .data-particle.cross {
+            background: transparent;
+            box-shadow: none;
+            width: 10px;
+            height: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .data-particle.cross::before, .data-particle.cross::after {
+            content: '';
+            position: absolute;
+            background: rgba(6, 182, 212, 0.3);
+        }
+        .data-particle.cross::before { width: 100%; height: 1px; }
+        .data-particle.cross::after { height: 100%; width: 1px; }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #030305; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+        .unified-glass {
+            background: rgba(14, 18, 27, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .perspective-1000 { perspective: 1000px; }
+        .preserve-3d { transform-style: preserve-3d; }
+        .backface-hidden { backface-visibility: hidden; }
+        .rotate-y-180 { transform: rotateY(180deg); }
+        .group:hover .group-hover\:rotate-y-180 { transform: rotateY(180deg); }
+        .neon-aura {
+            position: relative;
+            z-index: 1;
+        }
+        .neon-aura::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(45deg, #FF6B00, #d946ef, #FF6B00);
+            background-size: 400%;
+            z-index: -1;
+            filter: blur(8px);
+            animation: shimmer 20s linear infinite;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: inherit;
+        }
+        .neon-aura:hover::before { opacity: 1; }
+        .bg-tech-grid {
+            background-image: 
+                linear-gradient(rgba(139, 92, 246, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(139, 92, 246, 0.05) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+        .timeline-beam {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            height: 2px;
+            width: 100%;
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-50%);
+            z-index: 0;
+        }
+        .timeline-beam-active {
+            position: absolute;
+            top: 50%;
+            height: 6px;
+            width: 25%;
+            background: linear-gradient(90deg, transparent, #8b5cf6, #fff, #8b5cf6, transparent);
+            transform: translateY(-50%);
+            z-index: 1;
+            filter: blur(6px);
+            box-shadow: 0 0 30px 5px #8b5cf6;
+        }
+        .connector-line {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(139,92,246,0.3), transparent);
+            width: 100%;
+            top: 50%;
+            left: 50%;
+            z-index: 0;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .offer-grid:hover .connector-line {
+            opacity: 1;
+        }
+        .offer-card-pulse {
+             position: relative;
+        }
+        .offer-card-pulse::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 1rem;
+            padding: 2px; 
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.1), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            background-size: 200% 100%;
+            animation: shimmer-slow 4s linear infinite;
+            opacity: 0.5;
+        }
+        .organic-blur-divider {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 150px;
+            background: radial-gradient(ellipse at center, rgba(139,92,246,0.15) 0%, transparent 70%);
+            filter: blur(40px);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .floating-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 10s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="font-body selection:bg-neon-orange selection:text-white relative">
+<div class="liquid-background">
+<div class="liquid-blob w-[60vw] h-[60vw] top-[-10%] left-[-10%] bg-primary mix-blend-screen" style="animation-duration: 25s; opacity: 0.15;"></div>
+<div class="liquid-blob w-[50vw] h-[50vw] top-[20%] right-[-15%] bg-accent mix-blend-screen" style="animation-duration: 30s; animation-delay: -5s; opacity: 0.1;"></div>
+<div class="liquid-blob w-[55vw] h-[55vw] top-[50%] left-[-10%] bg-plasma mix-blend-screen" style="animation-duration: 28s; animation-delay: -10s; opacity: 0.1;"></div>
+<div class="liquid-blob w-[70vw] h-[70vw] bottom-[-20%] right-[10%] bg-primary mix-blend-screen" style="animation-duration: 35s; animation-delay: -2s; opacity: 0.12;"></div>
+<div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
+</div>
+<div class="particles-container">
+<div class="data-particle w-1 h-1 top-[10%] left-[10%] bg-white animate-drift-1 opacity-50"></div>
+<div class="data-particle w-1.5 h-1.5 top-[15%] left-[80%] bg-primary animate-drift-2 opacity-40"></div>
+<div class="data-particle w-1 h-1 top-[25%] left-[20%] bg-accent animate-drift-3 opacity-30"></div>
+<div class="data-particle w-2 h-2 top-[35%] left-[90%] bg-white animate-drift-1 opacity-20"></div>
+<div class="data-particle w-1 h-1 top-[45%] left-[15%] bg-primary animate-drift-2 opacity-50"></div>
+<div class="data-particle w-1.5 h-1.5 top-[55%] left-[70%] bg-accent animate-drift-3 opacity-40"></div>
+<div class="data-particle w-1 h-1 top-[65%] left-[5%] bg-white animate-drift-1 opacity-30"></div>
+<div class="data-particle w-2 h-2 top-[75%] left-[85%] bg-primary animate-drift-2 opacity-20"></div>
+<div class="data-particle w-1 h-1 top-[85%] left-[30%] bg-accent animate-drift-3 opacity-50"></div>
+<div class="data-particle hex top-[12%] left-[60%] animate-float-delayed"></div>
+<div class="data-particle hex top-[32%] left-[10%] animate-float-slow"></div>
+<div class="data-particle hex top-[52%] left-[90%] animate-float"></div>
+<div class="data-particle hex top-[72%] left-[20%] animate-float-delayed"></div>
+<div class="data-particle hex top-[92%] left-[75%] animate-float-slow"></div>
+<div class="data-particle cross top-[8%] right-[15%] animate-spin-slow opacity-30"></div>
+<div class="data-particle cross top-[40%] right-[40%] animate-pulse opacity-20"></div>
+<div class="data-particle cross top-[80%] left-[40%] animate-spin-slow opacity-25"></div>
+<div class="data-particle w-0.5 h-0.5 top-[20%] left-[40%] bg-white animate-pulse opacity-40"></div>
+<div class="data-particle w-0.5 h-0.5 top-[21%] left-[42%] bg-white animate-pulse opacity-30"></div>
+<div class="data-particle w-0.5 h-0.5 top-[19%] left-[41%] bg-white animate-pulse opacity-30"></div>
+<div class="data-particle w-0.5 h-0.5 top-[40%] right-[30%] bg-primary animate-pulse opacity-40"></div>
+<div class="data-particle w-0.5 h-0.5 top-[41%] right-[28%] bg-primary animate-pulse opacity-30"></div>
+<div class="data-particle w-0.5 h-0.5 top-[60%] left-[20%] bg-accent animate-pulse opacity-40"></div>
+<div class="data-particle w-0.5 h-0.5 top-[61%] left-[22%] bg-accent animate-pulse opacity-30"></div>
+</div>
+<header class="fixed top-0 z-50 w-full bg-obsidian/30 backdrop-blur-md border-b border-white/5 transition-all duration-300">
+<div class="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+<div class="flex items-center gap-2 group cursor-pointer">
+<div class="relative flex items-center justify-center w-10 h-10 rounded-xl bg-white/5 border border-white/10 shadow-[0_0_15px_rgba(139,92,246,0.3)] overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-tr from-primary/20 to-accent/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<span class="material-symbols-outlined text-transparent bg-clip-text bg-gradient-to-tr from-primary to-accent text-2xl relative z-10">bolt</span>
+</div>
+<span class="text-xl font-display font-bold tracking-tight text-white group-hover:text-primary transition-colors duration-300">Operación <span class="font-light text-gray-400 group-hover:text-gray-200">eficiente</span></span>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium text-gray-400 hover:text-white transition-colors relative group" href="#beneficios">
+                    beneficios
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+</a>
+<a class="text-sm font-medium text-gray-400 hover:text-white transition-colors relative group" href="#plan">
+                    método
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-plasma transition-all duration-300 group-hover:w-full"></span>
+</a>
+<a class="text-sm font-medium text-gray-400 hover:text-white transition-colors relative group" href="#oferta">
+                    servicios
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
+</a>
+</nav>
+<a class="glass-panel text-white bg-neon-orange/80 hover:bg-neon-orange px-6 py-2 rounded-full text-sm font-bold tracking-wide transition-all border border-neon-orange/50 shadow-[0_0_10px_rgba(255,107,0,0.4)] hover:shadow-[0_0_20px_rgba(255,107,0,0.6)] hover:scale-105 active:scale-95 neon-aura inline-flex items-center justify-center" href="#final-cta">
+                Agendar diagnóstico
+            </a>
+</div>
+</header>
+<main class="relative z-10">
+<section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+<div class="absolute inset-0 z-0 pointer-events-none">
+<div class="data-particle w-1 h-1 top-1/3 left-1/4 bg-white animate-pulse opacity-60"></div>
+<div class="data-particle w-1 h-1 top-2/3 right-1/4 bg-primary animate-pulse opacity-60" style="animation-delay: 1s;"></div>
+</div>
+<div class="floating-particle top-1/4 left-1/4" style="animation-delay: 0s;"></div>
+<div class="floating-particle top-3/4 right-1/4" style="animation-delay: -3s;"></div>
+<div class="floating-particle top-1/2 right-10" style="animation-delay: -5s;"></div>
+<div class="container mx-auto px-4 relative z-10 text-center">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 mb-8 backdrop-blur-md animate-[slide-in-right_1s_ease-out]">
+<span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+<span class="text-xs font-semibold text-gray-300 uppercase tracking-widest font-display">Fluid v2.1 + ai grid</span>
+</div>
+<p class="text-xl md:text-2xl text-white font-medium font-display tracking-wide mb-12 animate-[reveal-up_1s_ease-out_0.2s_forwards] opacity-0" style="text-shadow: 0 0 20px rgba(6, 182, 212, 0.6), 0 0 40px rgba(6, 182, 212, 0.2);">
+                    Ayudamos a empresas a aumentar su eficiencia operativa
+                </p>
+<h1 class="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-black tracking-tighter leading-[1.1] md:leading-[0.9] mb-8 relative w-full text-center mx-auto max-w-[95vw]">
+<div class="block transition-all duration-1000 ease-in-out py-1 md:py-2">
+<span class="block animate-carousel opacity-20 scale-90 blur-[2px] text-gray-600 whitespace-normal md:whitespace-nowrap" style="animation-delay: 0s;">Reduce errores</span>
+</div>
+<div class="block transition-all duration-1000 ease-in-out py-1 md:py-2 -mt-2 md:-mt-6">
+<span class="block animate-carousel opacity-20 scale-90 blur-[2px] text-gray-600 whitespace-normal md:whitespace-nowrap" style="animation-delay: 2.5s;">Elimina tareas</span>
+</div>
+<div class="block transition-all duration-1000 ease-in-out py-1 md:py-2 -mt-2 md:-mt-6">
+<span class="block animate-carousel opacity-20 scale-90 blur-[2px] text-gray-600 whitespace-normal md:whitespace-nowrap" style="animation-delay: 5s;">Escala sin fricción</span>
+</div>
+</h1>
+<p class="max-w-2xl mx-auto mb-12 text-lg md:text-xl text-gray-400 font-light leading-relaxed opacity-0 animate-[reveal-up_1s_ease-out_0.6s_forwards]">
+                    Transforma el caos operativo en crecimiento estructurado con consultoría de eficiencia e IA de última generación.
+                </p>
+<div class="flex flex-col sm:flex-row gap-6 justify-center items-center opacity-0 animate-[reveal-up_1s_ease-out_0.8s_forwards]">
+<button class="w-full sm:w-auto neon-aura bg-neon-orange text-white px-8 py-4 rounded-full font-bold text-lg flex justify-center items-center gap-2 hover:scale-105 transition-transform duration-300 shadow-[0_0_30px_rgba(255,107,0,0.4)] border border-white/20">
+                        Diagnosticar mi operación
+                        <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<button class="w-full sm:w-auto px-8 py-4 rounded-full border border-white/20 text-white font-medium hover:bg-white/5 hover:border-white/40 transition-all backdrop-blur-sm flex justify-center items-center gap-2">
+<span class="material-symbols-outlined text-accent">play_circle</span>
+                        Ver demo
+                    </button>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-obsidian/20 to-transparent z-0 pointer-events-none"></div>
+</section>
+<section class="py-24 relative z-10" id="beneficios">
+<div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-primary/5 blur-[100px] rounded-full pointer-events-none"></div>
+<div class="container mx-auto px-4 max-w-6xl">
+<div class="text-center mb-16 relative z-10">
+<h2 class="text-3xl md:text-4xl font-display font-bold text-white mb-4">Así se ve la eficiencia operativa</h2>
+<p class="text-gray-400">Pasa el cursor sobre las tarjetas para descubrir la transformación</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="group perspective-1000 w-full h-[440px] cursor-pointer">
+<div class="relative w-full h-full text-center transition-all duration-700 preserve-3d group-hover:rotate-y-180 shadow-2xl rounded-2xl">
+<div class="absolute inset-0 backface-hidden unified-glass p-8 rounded-2xl flex flex-col items-center justify-center gap-6">
+<div class="w-20 h-20 rounded-full bg-red-500/10 flex items-center justify-center border border-red-500/20 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-red-500 text-4xl">content_paste_off</span>
+</div>
+<div>
+<h3 class="text-xl font-bold text-white font-display mb-2">Actividades de valor</h3>
+<p class="text-gray-400 text-sm leading-relaxed">El equipo invierte tiempo en ejecución y seguimiento manual, dejando poco espacio para mejorar resultados.</p>
+</div>
+<span class="text-xs text-red-400 uppercase tracking-widest mt-4 border border-red-500/30 px-3 py-1 rounded-full">El problema</span>
+</div>
+<div class="absolute inset-0 backface-hidden rotate-y-180 bg-gradient-to-br from-primary/20 via-surface/80 to-surface/80 border border-primary/30 p-8 rounded-2xl flex flex-col items-center justify-center gap-6 overflow-hidden backdrop-blur-xl">
+<div class="absolute inset-0 bg-primary/5 animate-pulse"></div>
+<div class="w-20 h-20 rounded-full bg-primary/20 flex items-center justify-center border border-primary/50 relative z-10 shadow-[0_0_30px_rgba(139,92,246,0.4)] animate-float">
+<span class="material-symbols-outlined text-primary text-4xl">auto_fix_high</span>
+</div>
+<div class="relative z-10">
+<h3 class="text-xl font-bold text-white font-display mb-2">Ingesta automática</h3>
+<p class="text-gray-300 text-sm leading-relaxed">El tiempo se dedica a decidir, optimizar y crecer. La operación no lo consume.</p>
+</div>
+<span class="text-xs text-primary uppercase tracking-widest mt-4 font-bold relative z-10 border border-primary/50 px-3 py-1 rounded-full bg-primary/10">La solución</span>
+</div>
+</div>
+</div>
+<div class="group perspective-1000 w-full h-[440px] cursor-pointer">
+<div class="relative w-full h-full text-center transition-all duration-700 preserve-3d group-hover:rotate-y-180 shadow-2xl rounded-2xl">
+<div class="absolute inset-0 backface-hidden unified-glass p-8 rounded-2xl flex flex-col items-center justify-center gap-6">
+<div class="w-20 h-20 rounded-full bg-red-500/10 flex items-center justify-center border border-red-500/20 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-red-500 text-4xl">hourglass_disabled</span>
+</div>
+<div>
+<h3 class="text-xl font-bold text-white font-display mb-2">Más velocidad</h3>
+<p class="text-gray-400 text-sm leading-relaxed">El trabajo se frena por aprobaciones, retrabajo y esperas entre etapas.</p>
+</div>
+<span class="text-xs text-red-400 uppercase tracking-widest mt-4 border border-red-500/30 px-3 py-1 rounded-full">El problema</span>
+</div>
+<div class="absolute inset-0 backface-hidden rotate-y-180 bg-gradient-to-br from-accent/20 via-surface/80 to-surface/80 border border-accent/30 p-8 rounded-2xl flex flex-col items-center justify-center gap-6 overflow-hidden backdrop-blur-xl">
+<div class="absolute inset-0 bg-accent/5 animate-pulse"></div>
+<div class="w-20 h-20 rounded-full bg-accent/20 flex items-center justify-center border border-accent/50 relative z-10 shadow-[0_0_30px_rgba(6,182,212,0.4)] animate-float-delayed">
+<span class="material-symbols-outlined text-accent text-4xl">rocket_launch</span>
+</div>
+<div class="relative z-10">
+<h3 class="text-xl font-bold text-white font-display mb-2">Flujos instantáneos</h3>
+<p class="text-gray-300 text-sm leading-relaxed">El flujo es simple y predecible. Baja el tiempo de ciclo y se ejecuta más rápido.</p>
+</div>
+<span class="text-xs text-accent uppercase tracking-widest mt-4 font-bold relative z-10 border border-accent/50 px-3 py-1 rounded-full bg-accent/10">La solución</span>
+</div>
+</div>
+</div>
+<div class="group perspective-1000 w-full h-[440px] cursor-pointer">
+<div class="relative w-full h-full text-center transition-all duration-700 preserve-3d group-hover:rotate-y-180 shadow-2xl rounded-2xl">
+<div class="absolute inset-0 backface-hidden unified-glass p-8 rounded-2xl flex flex-col items-center justify-center gap-6">
+<div class="w-20 h-20 rounded-full bg-red-500/10 flex items-center justify-center border border-red-500/20 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-red-500 text-4xl">visibility_off</span>
+</div>
+<div>
+<h3 class="text-xl font-bold text-white font-display mb-2">Calidad</h3>
+<p class="text-gray-400 text-sm leading-relaxed">La falta de controles provoca retrabajo, inconsistencias y pérdida de confianza del cliente.</p>
+</div>
+<span class="text-xs text-red-400 uppercase tracking-widest mt-4 border border-red-500/30 px-3 py-1 rounded-full">El problema</span>
+</div>
+<div class="absolute inset-0 backface-hidden rotate-y-180 bg-gradient-to-br from-plasma/20 via-surface/80 to-surface/80 border border-plasma/30 p-8 rounded-2xl flex flex-col items-center justify-center gap-6 overflow-hidden backdrop-blur-xl">
+<div class="absolute inset-0 bg-plasma/5 animate-pulse"></div>
+<div class="w-20 h-20 rounded-full bg-plasma/20 flex items-center justify-center border border-plasma/50 relative z-10 shadow-[0_0_30px_rgba(217,70,239,0.4)] animate-float-slow">
+<span class="material-symbols-outlined text-plasma text-4xl">monitoring</span>
+</div>
+<div class="relative z-10">
+<h3 class="text-xl font-bold text-white font-display mb-2">Claridad total</h3>
+<p class="text-gray-300 text-sm leading-relaxed">La calidad se asegura desde el proceso. Los resultados son consistentes y el retrabajo es mínimo.</p>
+</div>
+<span class="text-xs text-plasma uppercase tracking-widest mt-4 font-bold relative z-10 border border-plasma/50 px-3 py-1 rounded-full bg-plasma/10">La solución</span>
+</div>
+</div>
+</div>
+<div class="group perspective-1000 w-full h-[440px] cursor-pointer">
+<div class="relative w-full h-full text-center transition-all duration-700 preserve-3d group-hover:rotate-y-180 shadow-2xl rounded-2xl">
+<div class="absolute inset-0 backface-hidden unified-glass p-8 rounded-2xl flex flex-col items-center justify-center gap-6">
+<div class="w-20 h-20 rounded-full bg-red-500/10 flex items-center justify-center border border-red-500/20 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-red-500 text-4xl">content_paste_off</span>
+</div>
+<div>
+<h3 class="text-xl font-bold text-white font-display mb-2">Estabilidad operativa</h3>
+<p class="text-gray-400 text-sm leading-relaxed">La operación depende de personas clave y el desempeño varía según quién ejecute.</p>
+</div>
+<span class="text-xs text-red-400 uppercase tracking-widest mt-4 border border-red-500/30 px-3 py-1 rounded-full">El problema</span>
+</div>
+<div class="absolute inset-0 backface-hidden rotate-y-180 bg-gradient-to-br from-primary/20 via-surface/80 to-surface/80 border border-primary/30 p-8 rounded-2xl flex flex-col items-center justify-center gap-6 overflow-hidden backdrop-blur-xl">
+<div class="absolute inset-0 bg-primary/5 animate-pulse"></div>
+<div class="w-20 h-20 rounded-full bg-primary/20 flex items-center justify-center border border-primary/50 relative z-10 shadow-[0_0_30px_rgba(139,92,246,0.4)] animate-float">
+<span class="material-symbols-outlined text-primary text-4xl">auto_fix_high</span>
+</div>
+<div class="relative z-10">
+<h3 class="text-xl font-bold text-white font-display mb-2">Ingesta automática</h3>
+<p class="text-gray-300 text-sm leading-relaxed">El proceso es estándar y robusto. Funciona con continuidad, sin depender de una persona.</p>
+</div>
+<span class="text-xs text-primary uppercase tracking-widest mt-4 font-bold relative z-10 border border-primary/50 px-3 py-1 rounded-full bg-primary/10">La solución</span>
+</div>
+</div>
+</div>
+<div class="group perspective-1000 w-full h-[440px] cursor-pointer">
+<div class="relative w-full h-full text-center transition-all duration-700 preserve-3d group-hover:rotate-y-180 shadow-2xl rounded-2xl">
+<div class="absolute inset-0 backface-hidden unified-glass p-8 rounded-2xl flex flex-col items-center justify-center gap-6">
+<div class="w-20 h-20 rounded-full bg-red-500/10 flex items-center justify-center border border-red-500/20 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-red-500 text-4xl">hourglass_disabled</span>
+</div>
+<div>
+<h3 class="text-xl font-bold text-white font-display mb-2">Fluidez</h3>
+<p class="text-gray-400 text-sm leading-relaxed">La coordinación interna ralentiza el avance y obliga a destrabar bloqueos constantemente.</p>
+</div>
+<span class="text-xs text-red-400 uppercase tracking-widest mt-4 border border-red-500/30 px-3 py-1 rounded-full">El problema</span>
+</div>
+<div class="absolute inset-0 backface-hidden rotate-y-180 bg-gradient-to-br from-accent/20 via-surface/80 to-surface/80 border border-accent/30 p-8 rounded-2xl flex flex-col items-center justify-center gap-6 overflow-hidden backdrop-blur-xl">
+<div class="absolute inset-0 bg-accent/5 animate-pulse"></div>
+<div class="w-20 h-20 rounded-full bg-accent/20 flex items-center justify-center border border-accent/50 relative z-10 shadow-[0_0_30px_rgba(6,182,212,0.4)] animate-float-delayed">
+<span class="material-symbols-outlined text-accent text-4xl">rocket_launch</span>
+</div>
+<div class="relative z-10">
+<h3 class="text-xl font-bold text-white font-display mb-2">Flujos instantáneos</h3>
+<p class="text-gray-300 text-sm leading-relaxed">Los roles y estados son claros. El trabajo avanza sin interrupciones innecesarias.</p>
+</div>
+<span class="text-xs text-accent uppercase tracking-widest mt-4 font-bold relative z-10 border border-accent/50 px-3 py-1 rounded-full bg-accent/10">La solución</span>
+</div>
+</div>
+</div>
+<div class="group perspective-1000 w-full h-[440px] cursor-pointer">
+<div class="relative w-full h-full text-center transition-all duration-700 preserve-3d group-hover:rotate-y-180 shadow-2xl rounded-2xl">
+<div class="absolute inset-0 backface-hidden unified-glass p-8 rounded-2xl flex flex-col items-center justify-center gap-6">
+<div class="w-20 h-20 rounded-full bg-red-500/10 flex items-center justify-center border border-red-500/20 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-red-500 text-4xl">visibility_off</span>
+</div>
+<div>
+<h3 class="text-xl font-bold text-white font-display mb-2">Control</h3>
+<p class="text-gray-400 text-sm leading-relaxed">Se opera de forma reactiva, con prioridades poco claras y baja visibilidad.</p>
+</div>
+<span class="text-xs text-red-400 uppercase tracking-widest mt-4 border border-red-500/30 px-3 py-1 rounded-full">El problema</span>
+</div>
+<div class="absolute inset-0 backface-hidden rotate-y-180 bg-gradient-to-br from-plasma/20 via-surface/80 to-surface/80 border border-plasma/30 p-8 rounded-2xl flex flex-col items-center justify-center gap-6 overflow-hidden backdrop-blur-xl">
+<div class="absolute inset-0 bg-plasma/5 animate-pulse"></div>
+<div class="w-20 h-20 rounded-full bg-plasma/20 flex items-center justify-center border border-plasma/50 relative z-10 shadow-[0_0_30px_rgba(217,70,239,0.4)] animate-float-slow">
+<span class="material-symbols-outlined text-plasma text-4xl">monitoring</span>
+</div>
+<div class="relative z-10">
+<h3 class="text-xl font-bold text-white font-display mb-2">Claridad total</h3>
+<p class="text-gray-300 text-sm leading-relaxed">Métricas y seguimiento sostienen prioridades claras y una ejecución consistente.</p>
+</div>
+<span class="text-xs text-plasma uppercase tracking-widest mt-4 font-bold relative z-10 border border-plasma/50 px-3 py-1 rounded-full bg-plasma/10">La solución</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="py-24 relative" id="oferta">
+<div class="organic-blur-divider top-[-75px]"></div>
+<div class="container mx-auto px-4 max-w-7xl relative z-10">
+<div class="flex flex-col md:flex-row justify-between items-end mb-12">
+<div class="max-w-xl">
+<h2 class="text-3xl md:text-5xl font-display font-bold mb-2 text-white">Oferta integral</h2>
+<p class="text-gray-400">Todo lo necesario para escalar operaciones efectivamente.</p>
+<div class="flex items-center gap-2 mt-3 text-xs font-medium text-primary animate-pulse">
+<span class="material-symbols-outlined text-sm">ads_click</span>
+<span class="md:hidden">Toca para expandir</span>
+<span class="hidden md:inline">Pasa el cursor para revelar</span>
+</div>
+</div>
+<button class="mt-6 md:mt-0 text-white font-medium flex items-center gap-2 group hover:text-primary transition-colors">
+                        Ver cómo funciona
+                        <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_right_alt</span>
+</button>
+</div>
+<div class="relative offer-grid group/container">
+<div class="hidden lg:block absolute top-[28%] left-[12%] right-[12%] h-[1px] bg-white/5 z-0">
+<div class="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-primary to-transparent opacity-0 transition-opacity duration-700 connector-line"></div>
+</div>
+<div class="md:hidden absolute -right-2 top-1/2 -translate-y-1/2 z-30 animate-pulse text-white/50 bg-black/50 rounded-l-lg p-2 backdrop-blur-sm">
+<span class="material-symbols-outlined">arrow_forward_ios</span>
+</div>
+<div class="flex flex-nowrap overflow-x-auto snap-x snap-mandatory gap-4 px-4 -mx-4 pb-12 md:pb-0 md:mx-0 md:px-0 md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-6 relative z-10 hide-scrollbar scroll-smooth">
+<div class="offer-card-pulse group p-8 rounded-2xl unified-glass hover:border-primary/50 transition-all duration-500 relative overflow-hidden min-w-[85vw] md:min-w-0 snap-center animate-offer-slide md:animate-none" style="animation-delay: 0s;">
+<div class="absolute -top-10 -right-10 w-20 h-20 bg-primary/20 blur-[40px] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<div class="w-14 h-14 mb-6 rounded-lg bg-white/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors duration-500 relative z-10 shadow-[0_0_15px_rgba(255,255,255,0.1)] animate-pulse-slow">
+<span class="material-symbols-outlined text-3xl text-gray-400 group-hover:text-primary transition-colors duration-500 group-hover:scale-110 transform">biotech</span>
+</div>
+<h3 class="text-xl font-bold text-white mb-3 translate-y-2 group-hover:translate-y-0 transition-transform duration-500 relative z-10">Diagnóstico</h3>
+<div class="h-0 md:opacity-0 md:group-hover:h-auto md:group-hover:opacity-100 overflow-hidden transition-all duration-500 h-auto opacity-100 relative z-10">
+<p class="text-gray-400 text-sm leading-relaxed mt-2 pb-2">Auditoría profunda para identificar cuellos de botella y oportunidades ocultas.</p>
+</div>
+</div>
+<div class="offer-card-pulse group p-8 rounded-2xl unified-glass hover:border-accent/50 transition-all duration-500 relative overflow-hidden min-w-[85vw] md:min-w-0 snap-center animate-offer-slide md:animate-none" style="animation-delay: 3s;">
+<div class="absolute -top-10 -right-10 w-20 h-20 bg-accent/20 blur-[40px] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<div class="w-14 h-14 mb-6 rounded-lg bg-white/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors duration-500 relative z-10 shadow-[0_0_15px_rgba(255,255,255,0.1)] animate-pulse-slow">
+<span class="material-symbols-outlined text-3xl text-gray-400 group-hover:text-accent transition-colors duration-500 group-hover:scale-110 transform">architecture</span>
+</div>
+<h3 class="text-xl font-bold text-white mb-3 translate-y-2 group-hover:translate-y-0 transition-transform duration-500 relative z-10">Diseño</h3>
+<div class="h-0 md:opacity-0 md:group-hover:h-auto md:group-hover:opacity-100 overflow-hidden transition-all duration-500 h-auto opacity-100 relative z-10">
+<p class="text-gray-400 text-sm leading-relaxed mt-2 pb-2">Creación de planos personalizados para flujos de trabajo eficientes.</p>
+</div>
+</div>
+<div class="offer-card-pulse group p-8 rounded-2xl unified-glass hover:border-plasma/50 transition-all duration-500 relative overflow-hidden min-w-[85vw] md:min-w-0 snap-center animate-offer-slide md:animate-none" style="animation-delay: 6s;">
+<div class="absolute -top-10 -right-10 w-20 h-20 bg-plasma/20 blur-[40px] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<div class="w-14 h-14 mb-6 rounded-lg bg-white/10 flex items-center justify-center group-hover:bg-plasma/20 transition-colors duration-500 relative z-10 shadow-[0_0_15px_rgba(255,255,255,0.1)] animate-pulse-slow">
+<span class="material-symbols-outlined text-3xl text-gray-400 group-hover:text-plasma transition-colors duration-500 group-hover:scale-110 transform">build_circle</span>
+</div>
+<h3 class="text-xl font-bold text-white mb-3 translate-y-2 group-hover:translate-y-0 transition-transform duration-500 relative z-10">Implementación</h3>
+<div class="h-0 md:opacity-0 md:group-hover:h-auto md:group-hover:opacity-100 overflow-hidden transition-all duration-500 h-auto opacity-100 relative z-10">
+<p class="text-gray-400 text-sm leading-relaxed mt-2 pb-2">Integración técnica de herramientas y automatizaciones sin código.</p>
+</div>
+</div>
+<div class="offer-card-pulse group p-8 rounded-2xl unified-glass hover:border-white/50 transition-all duration-500 relative overflow-hidden min-w-[85vw] md:min-w-0 snap-center animate-offer-slide md:animate-none" style="animation-delay: 9s;">
+<div class="absolute -top-10 -right-10 w-20 h-20 bg-white/10 blur-[40px] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<div class="w-14 h-14 mb-6 rounded-lg bg-white/10 flex items-center justify-center group-hover:bg-white/10 transition-colors duration-500 relative z-10 shadow-[0_0_15px_rgba(255,255,255,0.1)] animate-pulse-slow">
+<span class="material-symbols-outlined text-3xl text-gray-400 group-hover:text-white transition-colors duration-500 group-hover:scale-110 transform">support_agent</span>
+</div>
+<h3 class="text-xl font-bold text-white mb-3 translate-y-2 group-hover:translate-y-0 transition-transform duration-500 relative z-10">Soporte</h3>
+<div class="h-0 md:opacity-0 md:group-hover:h-auto md:group-hover:opacity-100 overflow-hidden transition-all duration-500 h-auto opacity-100 relative z-10">
+<p class="text-gray-400 text-sm leading-relaxed mt-2 pb-2">Acompañamiento continuo para asegurar la adopción total del equipo.</p>
+</div>
+</div>
+</div>
+<div class="flex md:hidden justify-center gap-2 -mt-6 mb-8 relative z-20">
+<div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+<div class="w-2 h-2 rounded-full bg-white/20"></div>
+<div class="w-2 h-2 rounded-full bg-white/20"></div>
+<div class="w-2 h-2 rounded-full bg-white/20"></div>
+</div>
+</div>
+</div>
+</section>
+<section class="py-24 overflow-hidden relative" id="plan">
+<div class="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-obsidian/0 to-transparent z-10 pointer-events-none"></div>
+<div class="container mx-auto px-4 mb-10 relative z-20 flex justify-between items-end">
+<div>
+<span class="text-accent font-bold text-xs tracking-[0.2em] uppercase">Cronograma</span>
+<h2 class="text-3xl md:text-5xl font-display font-bold text-white mt-2">5 semanas a la eficiencia</h2>
+</div>
+<div class="md:hidden flex items-center gap-2 text-xs text-gray-500 animate-pulse">
+<span>Auto-play</span>
+<span class="material-symbols-outlined text-sm">double_arrow</span>
+</div>
+</div>
+<div class="relative w-full overflow-hidden">
+<div class="absolute top-[40%] left-0 w-full h-[2px] bg-white/5 z-0 block">
+<div class="timeline-beam-active w-full animate-beam-progress shadow-[0_0_30px_5px_rgba(139,92,246,0.6)]"></div>
+</div>
+<div class="md:hidden absolute -right-2 top-1/2 -translate-y-1/2 z-30 animate-pulse text-white/50 bg-black/50 rounded-l-lg p-2 backdrop-blur-sm">
+<span class="material-symbols-outlined">arrow_forward_ios</span>
+</div>
+<div class="flex overflow-x-auto snap-x snap-mandatory gap-8 pb-16 pt-8 px-4 md:px-[max(1rem,calc((100vw-80rem)/2))] hide-scrollbar relative z-10">
+<div class="snap-center shrink-0 w-[300px] md:w-[350px] p-8 rounded-3xl unified-glass flex flex-col justify-between relative group hover:border-primary transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_10px_40px_-10px_rgba(139,92,246,0.2)] animate-card-pop-sequence" style="animation-delay: 0s;">
+<div class="absolute -top-4 left-8 bg-obsidian px-4 py-1 border border-primary/50 rounded-full text-primary text-xs font-bold uppercase tracking-wider shadow-[0_0_15px_rgba(139,92,246,0.3)] z-20">Semana 01</div>
+<div>
+<div class="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-6 text-primary border border-primary/20 group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 shadow-[0_0_20px_rgba(139,92,246,0.1)]">
+<span class="material-symbols-outlined">search</span>
+</div>
+<h3 class="text-2xl font-bold text-white mb-3 group-hover:text-primary transition-colors">Diagnóstico profundo</h3>
+<p class="text-gray-400 text-sm">Entrevistas con el equipo, mapeo de procesos actuales y detección de fugas de dinero.</p>
+</div>
+<div class="hidden md:block absolute top-[40%] -left-4 w-3 h-3 bg-obsidian border-2 border-primary rounded-full z-0 animate-ping-slow"></div>
+<div class="hidden md:block absolute top-[40%] -right-4 w-3 h-3 bg-obsidian border-2 border-gray-700 rounded-full z-0 group-hover:border-primary transition-colors"></div>
+</div>
+<div class="snap-center shrink-0 w-[300px] md:w-[350px] p-8 rounded-3xl unified-glass flex flex-col justify-between relative group hover:border-accent transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_10px_40px_-10px_rgba(6,182,212,0.2)] animate-card-pop-sequence" style="animation-delay: 3s;">
+<div class="absolute -top-4 left-8 bg-obsidian px-4 py-1 border border-accent/50 rounded-full text-accent text-xs font-bold uppercase tracking-wider shadow-[0_0_15px_rgba(6,182,212,0.3)] z-20">Semana 02</div>
+<div>
+<div class="w-14 h-14 rounded-full bg-accent/10 flex items-center justify-center mb-6 text-accent border border-accent/20 group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 shadow-[0_0_20px_rgba(6,182,212,0.1)]">
+<span class="material-symbols-outlined">draw</span>
+</div>
+<h3 class="text-2xl font-bold text-white mb-3 group-hover:text-accent transition-colors">Diseño de solución</h3>
+<p class="text-gray-400 text-sm">Presentación del nuevo mapa operativo y selección del stack tecnológico ideal.</p>
+</div>
+<div class="hidden md:block absolute top-[40%] -right-4 w-3 h-3 bg-obsidian border-2 border-gray-700 rounded-full z-0 group-hover:border-accent transition-colors animate-ping-slow"></div>
+</div>
+<div class="snap-center shrink-0 w-[300px] md:w-[350px] p-8 rounded-3xl unified-glass flex flex-col justify-between relative group hover:border-plasma transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_10px_40px_-10px_rgba(217,70,239,0.2)] animate-card-pop-sequence" style="animation-delay: 6s;">
+<div class="absolute -top-4 left-8 bg-obsidian px-4 py-1 border border-plasma/50 rounded-full text-plasma text-xs font-bold uppercase tracking-wider shadow-[0_0_15px_rgba(217,70,239,0.3)] z-20">Semana 03</div>
+<div>
+<div class="w-14 h-14 rounded-full bg-plasma/10 flex items-center justify-center mb-6 text-plasma border border-plasma/20 group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 shadow-[0_0_20px_rgba(217,70,239,0.1)]">
+<span class="material-symbols-outlined">construction</span>
+</div>
+<h3 class="text-2xl font-bold text-white mb-3 group-hover:text-plasma transition-colors">Construcción</h3>
+<p class="text-gray-400 text-sm">Configuración de software, integración de APIs y desarrollo de automatizaciones.</p>
+</div>
+<div class="hidden md:block absolute top-[40%] -right-4 w-3 h-3 bg-obsidian border-2 border-gray-700 rounded-full z-0 group-hover:border-plasma transition-colors animate-ping-slow"></div>
+</div>
+<div class="snap-center shrink-0 w-[300px] md:w-[350px] p-8 rounded-3xl unified-glass flex flex-col justify-between relative group hover:border-white transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_10px_40px_-10px_rgba(255,255,255,0.1)] animate-card-pop-sequence" style="animation-delay: 9s;">
+<div class="absolute -top-4 left-8 bg-obsidian px-4 py-1 border border-white/50 rounded-full text-white text-xs font-bold uppercase tracking-wider shadow-[0_0_15px_rgba(255,255,255,0.2)] z-20">Semana 04</div>
+<div>
+<div class="w-14 h-14 rounded-full bg-white/10 flex items-center justify-center mb-6 text-white border border-white/20 group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 shadow-[0_0_20px_rgba(255,255,255,0.1)]">
+<span class="material-symbols-outlined">school</span>
+</div>
+<h3 class="text-2xl font-bold text-white mb-3 group-hover:text-white transition-colors">Capacitación</h3>
+<p class="text-gray-400 text-sm">Talleres en vivo para asegurar que tu equipo domine las nuevas herramientas.</p>
+</div>
+<div class="hidden md:block absolute top-[40%] -right-4 w-3 h-3 bg-obsidian border-2 border-gray-700 rounded-full z-0 group-hover:border-white transition-colors animate-ping-slow"></div>
+</div>
+<div class="snap-center shrink-0 w-[300px] md:w-[350px] p-8 rounded-3xl unified-glass border-green-400/20 flex flex-col justify-between relative group hover:border-green-400 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_10px_40px_-10px_rgba(74,222,128,0.2)] animate-card-pop-sequence" style="animation-delay: 12s;">
+<div class="absolute -top-4 left-8 bg-obsidian px-4 py-1 border border-green-400/50 rounded-full text-green-400 text-xs font-bold uppercase tracking-wider shadow-[0_0_15px_rgba(74,222,128,0.3)] z-20">Semana 05</div>
+<div>
+<div class="w-14 h-14 rounded-full bg-green-400/10 flex items-center justify-center mb-6 text-green-400 border border-green-400/20 group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 shadow-[0_0_20px_rgba(74,222,128,0.1)]">
+<span class="material-symbols-outlined">rocket</span>
+</div>
+<h3 class="text-2xl font-bold text-white mb-3 group-hover:text-green-400 transition-colors">Lanzamiento</h3>
+<p class="text-gray-400 text-sm">Despliegue total, monitoreo de errores y entrega de documentación.</p>
+</div>
+<div class="hidden md:block absolute top-[40%] -right-4 w-3 h-3 bg-obsidian border-2 border-gray-700 rounded-full z-0 group-hover:border-green-400 transition-colors animate-ping-slow"></div>
+</div>
+</div>
+</div>
+</section>
+<section class="py-20 relative overflow-hidden">
+<div class="container mx-auto px-4 mb-10 text-center relative z-20">
+<h2 class="text-2xl font-display font-bold text-white">Resultados que escalan</h2>
+</div>
+<div class="flex w-full overflow-hidden mask-linear relative z-10">
+<div class="flex animate-scroll hover:animation-play-state-paused gap-8 w-max">
+<div class="w-[400px] p-6 rounded-xl unified-glass flex-shrink-0 hover:bg-white/5 transition-colors">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-xs font-bold text-white">CM</div>
+<div>
+<h4 class="font-bold text-white text-sm">Carlos M.</h4>
+<p class="text-xs text-gray-500">CEO, Logística Express</p>
+</div>
+</div>
+<p class="text-gray-300 italic text-sm">"Redujimos el tiempo de procesamiento de pedidos en un 75% en las primeras 4 semanas."</p>
+</div>
+<div class="w-[400px] p-6 rounded-xl unified-glass flex-shrink-0 hover:bg-white/5 transition-colors">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-xs font-bold text-white">AP</div>
+<div>
+<h4 class="font-bold text-white text-sm">Ana P.</h4>
+<p class="text-xs text-gray-500">COO, TechFlow</p>
+</div>
+</div>
+<p class="text-gray-300 italic text-sm">"La automatización de reportes nos ahorró contratar a dos personas más. Retorno inmediato."</p>
+</div>
+<div class="w-[400px] p-6 rounded-xl unified-glass flex-shrink-0 hover:bg-white/5 transition-colors">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-xs font-bold text-white">RS</div>
+<div>
+<h4 class="font-bold text-white text-sm">Roberto S.</h4>
+<p class="text-xs text-gray-500">Founder, StartUp X</p>
+</div>
+</div>
+<p class="text-gray-300 italic text-sm">"Nunca creí que podríamos operar con tanta claridad. El dashboard es una joya."</p>
+</div>
+<div class="w-[400px] p-6 rounded-xl unified-glass flex-shrink-0 hover:bg-white/5 transition-colors">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-xs font-bold text-white">LF</div>
+<div>
+<h4 class="font-bold text-white text-sm">Lucia F.</h4>
+<p class="text-xs text-gray-500">Director, Marketing Pro</p>
+</div>
+</div>
+<p class="text-gray-300 italic text-sm">"Las tareas repetitivas desaparecieron. Mi equipo por fin hace trabajo creativo."</p>
+</div>
+</div>
+</div>
+</section>
+<section class="py-24 relative z-10 border-t border-white/5" id="store">
+<div class="container mx-auto px-4 max-w-6xl">
+<div class="text-center mb-16">
+<h2 class="text-3xl md:text-5xl font-display font-bold text-white mb-4">Automatizaciones listas para integrar en minutos</h2>
+<p class="text-gray-400 text-lg">Soluciones prediseñadas para áreas clave. Sin desarrollo, sin fricción.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="group unified-glass p-8 rounded-3xl flex flex-col relative overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(139,92,246,0.15)] hover:scale-[1.02]">
+<div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-colors duration-300">
+<span class="material-symbols-outlined text-3xl">manage_accounts</span>
+</div>
+<h3 class="text-2xl font-bold text-white mb-2 font-display">Agente de cuentas</h3>
+<div class="text-3xl font-bold text-neon-orange mb-4">$97</div>
+<p class="text-gray-400 mb-6 flex-grow">Automatiza seguimiento de clientes y vencimientos de pago para recuperar flujo de caja.</p>
+<div class="bg-white/5 rounded-lg p-3 mb-6 border border-white/10">
+<div class="flex items-center gap-2 text-sm text-gray-300">
+<span class="material-symbols-outlined text-primary text-sm">check_circle</span>
+                                Plantilla zapier + instrucciones
+                            </div>
+</div>
+<button class="w-full py-3 rounded-xl bg-neon-orange text-white font-bold neon-aura shadow-lg shadow-neon-orange/20 hover:shadow-neon-orange/40 transition-all transform active:scale-95">
+                            Comprar ahora
+                        </button>
+<p class="text-xs text-gray-500 text-center mt-4">Incluye instrucciones. No requiere personalización. Soporte opcional.</p>
+</div>
+<div class="group unified-glass p-8 rounded-3xl flex flex-col relative overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(6,182,212,0.15)] hover:scale-[1.02]">
+<div class="w-14 h-14 rounded-xl bg-accent/10 flex items-center justify-center text-accent mb-6 group-hover:bg-accent group-hover:text-white transition-colors duration-300">
+<span class="material-symbols-outlined text-3xl">smart_toy</span>
+</div>
+<h3 class="text-2xl font-bold text-white mb-2 font-display">Bot de soporte con ia</h3>
+<div class="text-3xl font-bold text-neon-orange mb-4">$149</div>
+<p class="text-gray-400 mb-6 flex-grow">Responde preguntas frecuentes con inteligencia artificial las 24 horas del día.</p>
+<div class="bg-white/5 rounded-lg p-3 mb-6 border border-white/10">
+<div class="flex items-center gap-2 text-sm text-gray-300">
+<span class="material-symbols-outlined text-accent text-sm">check_circle</span>
+                                Flow make + integraciones
+                            </div>
+</div>
+<button class="w-full py-3 rounded-xl bg-neon-orange text-white font-bold neon-aura shadow-lg shadow-neon-orange/20 hover:shadow-neon-orange/40 transition-all transform active:scale-95">
+                            Comprar ahora
+                        </button>
+<p class="text-xs text-gray-500 text-center mt-4">Incluye instrucciones. No requiere personalización. Soporte opcional.</p>
+</div>
+<div class="group unified-glass p-8 rounded-3xl flex flex-col relative overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(217,70,239,0.15)] hover:scale-[1.02]">
+<div class="w-14 h-14 rounded-xl bg-plasma/10 flex items-center justify-center text-plasma mb-6 group-hover:bg-plasma group-hover:text-white transition-colors duration-300">
+<span class="material-symbols-outlined text-3xl">mark_email_read</span>
+</div>
+<h3 class="text-2xl font-bold text-white mb-2 font-display">Onboarding automático</h3>
+<div class="text-3xl font-bold text-neon-orange mb-4">$129</div>
+<p class="text-gray-400 mb-6 flex-grow">Emails, tareas y formularios automáticos para nuevos clientes. Cero olvidos.</p>
+<div class="bg-white/5 rounded-lg p-3 mb-6 border border-white/10">
+<div class="flex items-center gap-2 text-sm text-gray-300">
+<span class="material-symbols-outlined text-plasma text-sm">check_circle</span>
+                                Secuencia editable + tutorial
+                            </div>
+</div>
+<button class="w-full py-3 rounded-xl bg-neon-orange text-white font-bold neon-aura shadow-lg shadow-neon-orange/20 hover:shadow-neon-orange/40 transition-all transform active:scale-95">
+                            Comprar ahora
+                        </button>
+<p class="text-xs text-gray-500 text-center mt-4">Incluye instrucciones. No requiere personalización. Soporte opcional.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="py-24 relative z-10" id="precios">
+<div class="container mx-auto px-4 max-w-6xl">
+<div class="text-center mb-20">
+<h2 class="text-3xl md:text-5xl font-display font-bold text-white mb-4">Inversión transparente</h2>
+<p class="text-gray-400">Sin costos ocultos. Escala a tu ritmo.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-0 items-center">
+<div class="unified-glass p-8 rounded-3xl md:rounded-r-none md:rounded-l-3xl h-auto md:h-[500px] flex flex-col hover:bg-white/[0.05] transition-all relative z-0 animate-float-delayed hover:scale-[1.02] duration-300">
+<h3 class="text-xl font-bold text-gray-300">Starter</h3>
+<div class="my-6">
+<span class="text-4xl font-bold text-white">$2,500</span>
+<span class="text-sm text-gray-500">/mes</span>
+</div>
+<p class="text-sm text-gray-400 mb-8">Para equipos pequeños buscando victorias rápidas.</p>
+<div class="space-y-4 flex-1">
+<div class="flex items-center gap-2 text-sm text-gray-300"><span class="material-symbols-outlined text-gray-500 text-sm">check</span> Auditoría básica</div>
+<div class="flex items-center gap-2 text-sm text-gray-300"><span class="material-symbols-outlined text-gray-500 text-sm">check</span> 2 automatizaciones</div>
+<div class="flex items-center gap-2 text-sm text-gray-300"><span class="material-symbols-outlined text-gray-700 text-sm">close</span> Dashboard</div>
+</div>
+<button class="w-full py-3 rounded-lg border border-white/10 text-white text-sm font-bold hover:bg-white/5 mt-4">Elegir starter</button>
+</div>
+<div class="bg-[#0e121b]/80 backdrop-blur-xl border border-primary/50 p-8 rounded-3xl h-auto md:h-[580px] flex flex-col relative z-20 shadow-[0_0_50px_rgba(139,92,246,0.15)] overflow-hidden group animate-float hover:scale-105 transition-transform duration-500">
+<div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-primary via-accent to-primary animate-shimmer bg-[length:200%_100%]"></div>
+<div class="absolute -top-[100px] -right-[100px] w-[200px] h-[200px] bg-primary/20 blur-[80px] group-hover:bg-primary/30 transition-colors"></div>
+<div class="flex justify-between items-center mb-2">
+<h3 class="text-2xl font-bold text-white">Growth</h3>
+<span class="px-2 py-1 bg-primary/10 text-primary text-[10px] font-bold uppercase rounded border border-primary/20 shadow-[0_0_10px_rgba(139,92,246,0.3)]">Popular</span>
+</div>
+<div class="my-6">
+<span class="text-5xl font-bold text-white">$5,000</span>
+<span class="text-sm text-gray-500">/mes</span>
+</div>
+<p class="text-sm text-gray-300 mb-8">La suite completa para empresas en expansión.</p>
+<div class="space-y-4 flex-1">
+<div class="flex items-center gap-2 text-sm text-white"><span class="material-symbols-outlined text-primary text-sm">check_circle</span> Auditoría completa</div>
+<div class="flex items-center gap-2 text-sm text-white"><span class="material-symbols-outlined text-primary text-sm">check_circle</span> Automatizaciones ilimitadas</div>
+<div class="flex items-center gap-2 text-sm text-white"><span class="material-symbols-outlined text-primary text-sm">check_circle</span> Dashboard personalizado</div>
+<div class="flex items-center gap-2 text-sm text-white"><span class="material-symbols-outlined text-primary text-sm">check_circle</span> Soporte prioritario</div>
+</div>
+<button class="w-full py-4 rounded-xl bg-gradient-to-r from-neon-orange to-primary text-white font-bold shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all mt-4 hover:translate-y-[-2px]">Comenzar ahora</button>
+</div>
+<div class="unified-glass p-8 rounded-3xl md:rounded-l-none md:rounded-r-3xl h-auto md:h-[500px] flex flex-col hover:bg-white/[0.05] transition-all relative z-0 animate-float-slow hover:scale-[1.02] duration-300">
+<h3 class="text-xl font-bold text-gray-300">Enterprise</h3>
+<div class="my-6">
+<span class="text-4xl font-bold text-white">Custom</span>
+</div>
+<p class="text-sm text-gray-400 mb-8">Para organizaciones con requisitos complejos.</p>
+<div class="space-y-4 flex-1">
+<div class="flex items-center gap-2 text-sm text-gray-300"><span class="material-symbols-outlined text-gray-500 text-sm">check</span> Todo en growth</div>
+<div class="flex items-center gap-2 text-sm text-gray-300"><span class="material-symbols-outlined text-gray-500 text-sm">check</span> Ingeniero dedicado</div>
+<div class="flex items-center gap-2 text-sm text-gray-300"><span class="material-symbols-outlined text-gray-500 text-sm">check</span> SLA garantizado</div>
+</div>
+<button class="w-full py-3 rounded-lg border border-white/10 text-white text-sm font-bold hover:bg-white/5 mt-4">Contactar ventas</button>
+</div>
+</div>
+</div>
+</section>
+<section class="py-24 relative z-10">
+<div class="floating-particle top-10 left-1/3" style="animation-delay: -2s;"></div>
+<div class="container mx-auto px-4">
+<div class="max-w-4xl mx-auto p-1 bg-gradient-to-r from-transparent via-white/10 to-transparent rounded-3xl hover:via-accent/30 transition-all duration-700">
+<div class="unified-glass rounded-[22px] p-12 text-center relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-accent to-transparent opacity-50 group-hover:opacity-100 transition-opacity"></div>
+<div class="absolute inset-0 bg-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<span class="material-symbols-outlined text-6xl text-accent mb-6 animate-pulse-slow">verified_user</span>
+<h2 class="text-3xl font-display font-bold text-white mb-4 relative z-10">Garantía 100% libre de riesgo</h2>
+<p class="text-xl text-gray-400 leading-relaxed relative z-10">
+                            Si no te ahorramos al menos <span class="text-white font-bold bg-accent/10 px-2 rounded">20 horas de trabajo manual</span> en los primeros 30 días, te devolvemos tu cuota de implementación íntegra. Sin preguntas.
+                        </p>
+</div>
+</div>
+</div>
+</section>
+<section class="py-32 relative overflow-hidden" id="final-cta">
+<div class="absolute inset-0 bg-tech-grid opacity-30 animate-[pulse_4s_infinite]"></div>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-primary/30 to-accent/30 rounded-full blur-[120px] animate-pulse-slow"></div>
+<div class="container mx-auto px-4 relative z-10 text-center">
+<h2 class="text-4xl md:text-6xl font-display font-black text-white mb-6 tracking-tight">
+                    Tu operación te está costando...
+                </h2>
+<p class="text-2xl text-gray-400 mb-12 font-light">
+                    No dejes que la ineficiencia se coma tus márgenes un día más.
+                </p>
+<button class="group relative px-10 py-5 bg-neon-orange text-white font-bold text-xl rounded-full overflow-hidden transition-all hover:scale-105 shadow-[0_0_30px_rgba(255,107,0,0.4)] hover:shadow-[0_0_50px_rgba(255,107,0,0.6)] mx-auto block w-full sm:w-auto neon-aura">
+<span class="relative z-10 flex items-center justify-center gap-3">
+                        Agendar llamada de estrategia
+                        <span class="material-symbols-outlined group-hover:rotate-45 transition-transform duration-300">call_made</span>
+</span>
+<div class="absolute inset-0 bg-gradient-to-r from-orange-400 to-orange-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</button>
+<div class="mt-8 flex justify-center gap-8 text-sm text-gray-500 font-medium">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                        3 cupos disponibles para agosto
+                    </div>
+</div>
+</div>
+</section>
+<footer class="bg-black/40 backdrop-blur-md py-12 border-t border-white/5 relative z-10">
+<div class="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-2 group">
+<span class="material-symbols-outlined text-gray-500 group-hover:text-primary transition-colors">bolt</span>
+<span class="font-display font-bold text-gray-500 group-hover:text-white transition-colors">Operación eficiente</span>
+</div>
+<div class="flex gap-8 text-sm text-gray-600">
+<a class="hover:text-white transition-colors" href="#">Privacidad</a>
+<a class="hover:text-white transition-colors" href="#">Términos</a>
+<span>© 2023</span>
+</div>
+</div>
+</footer>
+</main>
+<div class="fixed inset-0 z-[100] hidden items-center justify-center" id="exit-intent-popup">
+<div class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity opacity-0" id="popup-backdrop"></div>
+<div class="relative w-full max-w-lg bg-gray-100 rounded-2xl p-8 shadow-2xl transform translate-y-10 opacity-0 scale-95 transition-all duration-500" id="popup-content">
+<button class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors" id="close-popup">
+<span class="material-symbols-outlined">close</span>
+</button>
+<div class="text-center">
+<div class="w-16 h-16 bg-neon-orange/10 rounded-full flex items-center justify-center mx-auto mb-6">
+<span class="material-symbols-outlined text-neon-orange text-3xl">flash_on</span>
+</div>
+<h3 class="text-2xl font-display font-bold text-gray-900 mb-3">¿Preferís empezar con algo más rápido?</h3>
+<p class="text-gray-600 mb-8 leading-relaxed">
+                    Llevate una automatización lista para usar desde solo <span class="font-bold text-neon-orange">$49</span>. <br/>Sin reuniones, sin implementación compleja.
+                </p>
+<a class="inline-flex items-center justify-center w-full py-4 rounded-xl bg-neon-orange text-white font-bold shadow-lg shadow-neon-orange/20 hover:shadow-neon-orange/40 transition-all hover:-translate-y-1" href="#store" id="popup-cta">
+                    Ver automatizaciones
+                </a>
+</div>
+</div>
+</div>
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.querySelector('.particles-container');
+            if (container) {
+                let currentY = 0;
+                let currentVel = 0;
+                let lastScrollTop = window.scrollY;
+                let mouseX = 0;
+                let mouseY = 0;
+                let targetMouseX = 0;
+                let targetMouseY = 0;
+                window.addEventListener('mousemove', (e) => {
+                    targetMouseX = (e.clientX / window.innerWidth - 0.5) * 40; 
+                    targetMouseY = (e.clientY / window.innerHeight - 0.5) * 40;
+                });
+                function loop() {
+                    const scrollTop = window.scrollY;
+                    const scrollVel = scrollTop - lastScrollTop;
+                    lastScrollTop = scrollTop;
+                    currentVel += (scrollVel - currentVel) * 0.08;
+                    currentY += currentVel * 2;
+                    const height = window.innerHeight;
+                    const offset = ((currentY % height) + height) % height;
+                    const stretch = Math.min(Math.abs(currentVel) * 0.05, 3);
+                    const scaleY = 1 + stretch;
+                    mouseX += (targetMouseX - mouseX) * 0.05;
+                    mouseY += (targetMouseY - mouseY) * 0.05;
+                    container.style.transform = `translate3d(${mouseX}px, ${-offset + mouseY}px, 0) scaleY(${scaleY})`;
+                    requestAnimationFrame(loop);
+                }
+                loop();
+            }
+            const popup = document.getElementById('exit-intent-popup');
+            const backdrop = document.getElementById('popup-backdrop');
+            const content = document.getElementById('popup-content');
+            const closeBtn = document.getElementById('close-popup');
+            const ctaBtn = document.getElementById('popup-cta');
+            let popupShown = false;
+            function showPopup() {
+                if (popupShown) return;
+                popupShown = true;
+                popup.classList.remove('hidden');
+                popup.classList.add('flex');
+                setTimeout(() => {
+                    backdrop.classList.remove('opacity-0');
+                    content.classList.remove('opacity-0', 'translate-y-10', 'scale-95');
+                }, 10);
+            }
+            function closePopupFn() {
+                backdrop.classList.add('opacity-0');
+                content.classList.add('opacity-0', 'translate-y-10', 'scale-95');
+                setTimeout(() => {
+                    popup.classList.add('hidden');
+                    popup.classList.remove('flex');
+                }, 500); 
+            }
+            document.addEventListener('mouseleave', (e) => {
+                if (e.clientY <= 0) {
+                    showPopup();
+                }
+            });
+            setTimeout(() => {
+                showPopup();
+            }, 45000);
+            if (closeBtn) closeBtn.addEventListener('click', closePopupFn);
+            if (ctaBtn) ctaBtn.addEventListener('click', closePopupFn);
+            if (backdrop) backdrop.addEventListener('click', closePopupFn);
+        });
+    </script>
+</body></html>
