@@ -266,7 +266,7 @@
 @layer base {
   body {
     @apply font-body bg-obsidian text-[#e2e8f0] overflow-x-hidden min-h-screen relative;
-    background-image: radial-gradient(circle at 50% 0%, #1a1a2e 0%, #030305 100%);
+    background: #030305;
   }
 }
 

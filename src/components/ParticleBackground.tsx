@@ -56,11 +56,6 @@ const ParticleBackground = () => {
     return (
         <>
             <div className="liquid-background">
-                <div className="liquid-blob w-[60vw] h-[60vw] top-[-10%] left-[-10%] bg-primary opacity-[0.15]" style={{ animationDuration: '25s' }}></div>
-                <div className="liquid-blob w-[50vw] h-[50vw] top-[20%] right-[-15%] bg-accent opacity-[0.1]" style={{ animationDuration: '30s', animationDelay: '-5s' }}></div>
-                <div className="liquid-blob w-[55vw] h-[55vw] top-[50%] left-[-10%] bg-plasma opacity-[0.1]" style={{ animationDuration: '28s', animationDelay: '-10s' }}></div>
-                <div className="liquid-blob w-[70vw] h-[70vw] bottom-[-20%] right-[10%] bg-primary opacity-[0.12]" style={{ animationDuration: '35s', animationDelay: '-2s' }}></div>
-                <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
             </div>
 
             <div ref={containerRef} className="particles-container">
