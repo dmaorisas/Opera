@@ -48,7 +48,6 @@ function App() {
         window.location.hash = '';
     };
 
-    // Render Newsletter Page (ONLY active when hash is #blog or #blog/slug)
     if (currentRoute === 'blog') {
         return (
             <NewsletterIndex
@@ -69,7 +68,6 @@ function App() {
         );
     }
 
-    // Default Home Page (100% untouched original components)
     return (
         <div className="app">
             <ParticleBackground />
